@@ -3,7 +3,7 @@ from .views import (
     RegisterView, MyTokenObtainPairView,
     CategoryList, LessonList, LessonDetail,
     QuizDetail, SubmitQuiz, QuizAnalytics,
-    LessonCreateView, QuizCreateView
+    LessonCreateView, QuizCreateView, LessonsWithoutQuizView
 )
 
 urlpatterns = [
@@ -12,6 +12,7 @@ urlpatterns = [
     
     path('categories/', CategoryList.as_view(), name='category-list'),
     path('lessons/', LessonList.as_view(), name='lesson-list'),
+    path('lessons/without-quiz/', LessonsWithoutQuizView.as_view(), name='lessons-without-quiz'),
     path('lessons/<int:pk>/', LessonDetail.as_view(), name='lesson-detail'),
     
     path('lessons/<int:lesson_id>/quiz/', QuizDetail.as_view(), name='quiz-detail'),

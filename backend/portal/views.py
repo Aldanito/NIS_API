@@ -139,6 +139,18 @@ class LessonCreateView(generics.CreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+class LessonsWithoutQuizView(generics.ListAPIView):
+    serializer_class = LessonSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        # Get lessons owned by the current user that don't have a quiz
+        return Lesson.objects.filter(
+            owner=self.request.user
+        ).exclude(
+            id__in=Quiz.objects.values_list('lesson_id', flat=True)
+        )
+
 class QuizCreateView(generics.CreateAPIView):
     serializer_class = QuizCreateSerializer
     permission_classes = [IsAuthenticated]
